@@ -8,25 +8,25 @@ public record Triangle(float angle0, float angle1, float angle2) {
     public Triangle(Triangle t){
         this(t.angle0, t.angle1, t.angle2);
     }
-    public boolean isRight(){
-        return this.angle0==90 || this.angle1==90 || this.angle2==90;
+    public boolean isRight(){   //Algún ángulo mide 90º
+        return this.angle0 == 90 || this.angle1 == 90 || this.angle2 == 90;
     }
-    public boolean isAcute(){
-        return this.angle0<90 && this.angle1<90 && this.angle2<90;
+    public boolean isAcute(){   //Todos los ángulos miden menos de 90º
+        return this.angle0 < 90 && this.angle1 < 90 && this.angle2 < 90;
     }
-    public boolean isObtuse(){
+    public boolean isObtuse(){  //Al menos un ángulo mide más de 90º
         return this.angle0 > 90 || this.angle1 > 90 || this.angle2 > 90;
     }
-    public boolean isEquilateral(){
-        return this.angle0== this.angle1 && this.angle0 == this.angle2;
+    public boolean isEquilateral(){ //Todos los ángulos miden lo mismo
+        return this.angle0 == this.angle1 && this.angle0 == this.angle2;
     }
-    public boolean isIsosceles(){
+    public boolean isIsosceles(){   //Exactamente dos ángulos miden lo mismo
         if ((this.angle0 == this.angle1)  && (this.angle0!=this.angle2)) return true;
         else if ((this.angle0 == this.angle2) && (this.angle0 != this.angle1)) return true;
         else return (this.angle1 == this.angle2) && (this.angle1 != this.angle0);
     }
-    public boolean isScalene(){
-        return (this.angle0 != this.angle1) && (this.angle0 != this.angle2) && (this.angle1 != this.angle2) ;
+    public boolean isScalene(){ //Todos los ángulos son distintos
+        return (this.angle0 != this.angle1) && (this.angle0 != this.angle2) && (this.angle1 != this.angle2);
     }
 
     @Override
@@ -36,13 +36,10 @@ public record Triangle(float angle0, float angle1, float angle2) {
         if (getClass()!=o.getClass()) return false;
 
         Triangle t = (Triangle) o;
-        if (angle0 == t.angle0 || angle0 == t.angle1 || angle0 == t.angle2 ) {
-            if (angle1 == t.angle0 || angle1 == t.angle1 || angle1 == t.angle2) {
-                return angle2 == t.angle0 || angle2 == t.angle1 || angle2 == t.angle2;
-            }
+        return (angle0 == t.angle0 || angle0 == t.angle1 || angle0 == t.angle2)
+                && (angle1 == t.angle0 || angle1 == t.angle1 || angle1 == t.angle2)
+                && (angle2 == t.angle0 || angle2 == t.angle1 || angle2 == t.angle2);
         }
-        return false;
-    }
 
     @Override
     public int hashCode(){

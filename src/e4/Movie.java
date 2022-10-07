@@ -24,14 +24,14 @@ public class Movie {
         this.Rating_list.add(rating);
     }
 
-    private boolean isRated(){
+    private boolean isRated(){  //Recorre la lista viendo si hay alguna valoración distinta de NOT_RATED
         int List_size = this.Rating_list.size() , i=0;
         for(;i<List_size;i++) {
             if(this.Rating_list.get(i) != NOT_RATED) return true;
         }
         return false;
     }
-    public MovieRating maximumRating () {
+    public MovieRating maximumRating () {   //Recorre la lista almacenando en maximum la mejor valoración.
         MovieRating maximum = NOT_RATED;
         for (Object o : this.Rating_list) {
             if (!maximum.isBetterThan((MovieRating) o)) {
@@ -40,7 +40,7 @@ public class Movie {
         }
         return maximum;
     }
-    public double averageRating() {
+    public double averageRating() { //Recorre la lista excluyendo las no valoradas y sumando la valoración de las que sí lo están
         float suma=0,conteo=0;
 
         if (!isRated()) throw new java.util.NoSuchElementException();

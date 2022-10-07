@@ -1,6 +1,6 @@
 package e4;
 
-public enum MovieRating {
+public enum MovieRating {   //Enum externo con las valoraciones de las palículas.
     NOT_RATED(-1),
     AWFUL(0),
     BAD(2),
