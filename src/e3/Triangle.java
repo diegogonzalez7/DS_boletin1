@@ -9,7 +9,7 @@ public record Triangle(float angle0, float angle1, float angle2) {
         this(t.angle0, t.angle1, t.angle2);
     }
     public boolean isRight(){
-        return this.angle0 == 90 || this.angle1 == 90 || this.angle2 == 90;
+        return this.angle0==90 || this.angle1==90 || this.angle2==90;
     }
     public boolean isAcute(){
         return this.angle0<90 && this.angle1<90 && this.angle2<90;
@@ -21,10 +21,9 @@ public record Triangle(float angle0, float angle1, float angle2) {
         return this.angle0== this.angle1 && this.angle0 == this.angle2;
     }
     public boolean isIsosceles(){
-        return ((this.angle0 == this.angle1)  && (this.angle0!=this.angle2)) ||
-                ((this.angle0 == this.angle2) && (this.angle0 != this.angle1)) ||
-                ((this.angle1 == this.angle2) && (this.angle1 != this.angle0));
-
+        if ((this.angle0 == this.angle1)  && (this.angle0!=this.angle2)) return true;
+        else if ((this.angle0 == this.angle2) && (this.angle0 != this.angle1)) return true;
+        else return (this.angle1 == this.angle2) && (this.angle1 != this.angle0);
     }
     public boolean isScalene(){
         return (this.angle0 != this.angle1) && (this.angle0 != this.angle2) && (this.angle1 != this.angle2) ;

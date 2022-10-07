@@ -9,7 +9,7 @@ public enum MovieRating {
     EXCELLENT(8),
     MASTERPIECE(10);
 
-    private int NumericRating;
+    private final int NumericRating;
 
     MovieRating (int NumericRating){
         this.NumericRating = NumericRating;

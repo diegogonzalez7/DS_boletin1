@@ -1,9 +1,7 @@
 package e2;
 
 import java.util.Arrays;
-
 public class SocialDistance {
-
     public static Boolean isValidArray(char[][] layout) {
         if (layout == null) throw new IllegalArgumentException();
 
@@ -35,225 +33,85 @@ public class SocialDistance {
         }
         return layout;
     }
-    public static char[][] standUpPPl(char[][] layout, int rows, int cols) {
+    public static char[][] manageMatrix(char[][] layout, int rows, int cols,char option) {
         int conteo, g, h;
-        char[][] copyLayout = Arrays.stream(layout).map(char[]::clone).toArray(char[][]::new);
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                //Levantar gente
-
-                if (layout[i][j] == '#' && rows!=1 && cols!=1) {
-
-                    //Levanta gente de la primera fila
-                    if (i == 0 && (j != 0 && j != cols - 1)) {
-
-                        conteo = 0;
-                        h = 0; //Incremento filas
-                        g = -1; //Incremento columnas
-
-                        while (conteo < 4 && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') conteo++;
-                            }
-                            if (g == 1) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (conteo >= 4) copyLayout[i][j] = 'A';
-                    }
-
-                    //Levanta gente de la ultima fila
-                    else if (i == rows - 1 && (j != 0 && j != cols - 1)) {
-                        conteo = 0;
-                        g = -1;
-                        h = -1;
-                        while (conteo < 4 && h < 1) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') conteo++;
-                            }
-                            if (g == 1) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (conteo >= 4) copyLayout[i][j] = 'A';
-                    }
-
-                    //Levanta gente de la columna de la izda
-                    else if (j == 0 && (i != 0 && i != rows - 1)) {
-                        conteo = 0;
-                        g = 0;
-                        h = -1;
-                        while (conteo < 4 && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') conteo++;
-                            }
-                            if (g == 1) {
-                                g = -1;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (conteo >=4) copyLayout[i][j] = 'A';
-                    }
-
-                    //Levanta gente de la columna de la dcha
-                    else if (j == cols - 1 && (i != 0 && i != rows - 1)) {
-                        conteo = 0;
-                        g = -1;
-                        h = -1;
-                        while (conteo < 4 && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') conteo++;
-                            }
-                            if (g == 0) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (conteo >= 4) copyLayout[i][j] = 'A';
-                    }
-
-                    //Levantar gente de dentro
-                    else if (i != 0 && i != rows - 1 && j != 0 && j != cols - 1) {
-                        conteo = 0;
-                        g = -1;
-                        h = -1;
-                        while (conteo < 4 && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') conteo++;
-                            }
-                            if (g == 1) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (conteo >= 4) copyLayout[i][j] = 'A';
-                    }
-                }
-            }
-        }
-        return copyLayout;
-    }
-
-    public static char[][] finalArray(char[][] layout, int rows, int cols) {
-        //4 casos especiales en los que solo necesitarán tener 5 sitios adyacentes libres (primera y última fila, primera y última columna)
-        //Caso general en el que necesitarán tener 8 sitios libres adyacentes.
-        int g, h;
         boolean trigger;
-        char[][] copyLayout = getCopyLayout(layout);
+        char[][] copyLayout =  getCopyLayout(layout);
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if(layout[i][j]=='A' && rows!=1 && cols!=1) {
-                    if (i == 0 && (j != 0 && j != cols - 1)) {
-                        trigger = true;
-                        h = 0; //Incremento filas
+        //Levantar gente
+        if (option == 'l') {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (layout[i][j] == '#') {
+                        conteo = 0;
+                        h = -1; //Incremento filas
                         g = -1; //Incremento columnas
-
-                        while (trigger && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') trigger = false;
+                        while (conteo < 4 && h < 2) {
+                            if (i + h == -1 || i + h == rows) h++;
+                            else {
+                                if (j + g != -1 && j + g != cols) {
+                                    if (i + h != i || j + g != j) {
+                                        if (layout[i + h][j + g] == '#') conteo++;
+                                    }
+                                }
+                                if (g == 1) {
+                                    g = -2;
+                                    h++;
+                                }
+                                g++;
                             }
-                            if (g == 1) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
                         }
-                        if (trigger) copyLayout[i][j] = '#';
-                    } else if (i == rows - 1 && (j != 0 && j != cols - 1)) {
+                        if (conteo >= 4) copyLayout[i][j] = 'A';
+                    }
+                }
+            }
+        }
+            //Sentar gente
+        else if (option == 's') {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (layout[i][j] == 'A') {
                         trigger = true;
-                        g = -1;
-                        h = -1;
-                        while (trigger && h < 1) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') trigger = false;
-                            }
-                            if (g == 1) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (trigger) copyLayout[i][j] = '#';
-                    } else if (j == 0 && (i != 0 && i != rows - 1)) {
-                        trigger = true;
-                        g = 0;
-                        h = -1;
+                        h = -1; //Incremento filas
+                        g = -1; //Incremento columnas
                         while (trigger && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') trigger = false;
+                            if (i + h == -1 || i + h == rows) h++;
+                            else {
+                                if (j + g != -1 && j + g != cols) {
+                                    if (i + h != i || j + g != j) {
+                                        if (layout[i + h][j + g] == '#') trigger = false;
+                                    }
+                                }
+                                if (g == 1) {
+                                    g = -2;
+                                    h++;
+                                }
+                                g++;
                             }
-                            if (g == 1) {
-                                g = -1;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (trigger) copyLayout[i][j] = '#';
-                    } else if (j == cols - 1 && (i != 0 && i != rows - 1)) {
-                        trigger = true;
-                        g = -1;
-                        h = -1;
-                        while (trigger && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') trigger = false;
-                            }
-                            if (g == 0) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
-                        }
-                        if (trigger) copyLayout[i][j] = '#';
-                    } else if ((i != 0 && i != rows - 1) && (j != 0 && j != cols - 1)) {
-                        trigger = true;
-                        g = -1;
-                        h = -1;
-                        while (trigger && h < 2) {
-                            if (i + h != i || j + g != j) {
-                                if (layout[i + h][j + g] == '#') trigger = false;
-                            }
-                            if (g == 1) {
-                                g = -2;
-                                h++;
-                            }
-                            g++;
                         }
                         if (trigger) copyLayout[i][j] = '#';
                     }
                 }
             }
-        }
-        return copyLayout;
+        } return copyLayout;
     }
 
     private static char[][] getCopyLayout(char[][] layout) {
         return Arrays.stream(layout).map(char[]::clone).toArray(char[][]::new);
     }
-
     //A: Sitio libre #:Alguien sentado .:Sitio no disponible
-
     public static char[][] seatingPeople(char[][] layout) {
         if (isValidArray(layout)) {
             int rows = layout.length, cols = layout[0].length;
-            char [][] lastLayout;
-            lastLayout= getCopyLayout(everyoneSat(layout,rows,cols));
+            char [][] lastLayout = getCopyLayout(everyoneSat(layout,rows,cols));
             do {
                 layout = getCopyLayout(lastLayout);
-                lastLayout = standUpPPl(layout, rows, cols);
-                lastLayout = finalArray(lastLayout,rows,cols);
+                lastLayout = manageMatrix (lastLayout,rows,cols,'l');
+                lastLayout = manageMatrix(lastLayout,rows,cols,'s');
             } while (!Arrays.deepEquals(lastLayout,layout));
         } return layout;
     }
 }
-
 /*
 ALGORITMO PARA SENTARSE:
 1º-Sentarse en la original.

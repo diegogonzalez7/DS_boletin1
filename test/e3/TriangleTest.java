@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TriangleTest {
-    private static Triangle t90_1 = new Triangle(30, 60, 90);
-    private static Triangle t90_2 = new Triangle(60, 90, 30);
-    private static Triangle t90_3 = new Triangle(90, 30, 60);
-    private static Triangle t60 = new Triangle(60, 60, 60);
-    private static Triangle t100 = new Triangle(100, 40, 40);
+    private static final Triangle t90_1 = new Triangle(30, 60, 90);
+    private static final Triangle t90_2 = new Triangle(60, 90, 30);
+    private static final Triangle t90_3 = new Triangle(90, 30, 60);
+    private static final Triangle t60 = new Triangle(60, 60, 60);
+    private static final Triangle t100 = new Triangle(100, 40, 40);
 
 
 
